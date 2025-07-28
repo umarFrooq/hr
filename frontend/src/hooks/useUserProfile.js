@@ -1,37 +1,41 @@
-import { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
+import { useGetUserByIdQuery, useUpdateUserMutation } from "@/store/api/usersApi";
+import { toast } from "@/hooks/use-toast";
 
 export function useUserProfile() {
-  const [profile, setProfile] = useState({
-    id: "user1",
-    first_name: "John",
-    last_name: "Doe",
-    phone: "+1234567890",
-    address: "123 Main St",
-    city: "San Francisco",
-    state: "CA",
-    zip_code: "94105",
-    user_id: "user1",
+  const { user } = useSelector((state) => state.auth);
+  const {
+    data: profile,
+    isLoading,
+    isError,
+  } = useGetUserByIdQuery(user?.id, {
+    skip: !user?.id,
   });
-  const [loading, setLoading] = useState(false);
-
-  useEffect(() => {
-    // Simulate loading
-    setLoading(true);
-    setTimeout(() => {
-      setLoading(false);
-    }, 100);
-  }, []);
+  const [updateUser, { isLoading: isUpdating }] = useUpdateUserMutation();
 
   async function saveProfile(profileData) {
-    setLoading(true);
-
-    // Simulate API delay
-    await new Promise((resolve) => setTimeout(resolve, 500));
-
-    setProfile((prev) => ({ ...prev, ...profileData }));
-    setLoading(false);
-    return { data: { ...profile, ...profileData } };
+    try {
+      const res = await updateUser({ id: user.id, ...profileData }).unwrap();
+      toast({ title: "Profile updated" });
+      return { data: res };
+    } catch (err) {
+      const description =
+        typeof err.data?.message === "string"
+          ? err.data.message
+          : "Unknown error";
+      toast({
+        title: "Failed to save profile",
+        description,
+        variant: "destructive",
+      });
+      return { error: err.data?.message };
+    }
   }
 
-  return { profile, saveProfile, loading };
+  return {
+    profile,
+    saveProfile,
+    loading: isLoading || isUpdating,
+    isError,
+  };
 }

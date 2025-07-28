@@ -7,8 +7,12 @@ import WorkInfoCard from "./user-profile/WorkInfoCard";
 import SkillsExpertiseCard from "./user-profile/SkillsExpertiseCard";
 import PreferencesForm from "./user-profile/PreferencesForm";
 import DangerZoneCard from "./user-profile/DangerZoneCard";
+import { useUserProfile } from "@/hooks/useUserProfile";
+import SalaryCard from "./user-profile/SalaryCard";
 
 const UserProfile = () => {
+  const { profile, loading } = useUserProfile();
+
   return (
     <div className="space-y-8 animate-fade-in">
       <div>
@@ -17,7 +21,7 @@ const UserProfile = () => {
       </div>
       <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
         <div className="lg:col-span-1">
-          <UserSidebarCard />
+          <UserSidebarCard profile={profile} loading={loading} />
         </div>
         <div className="lg:col-span-3">
           <Tabs defaultValue="personal" className="w-full">
@@ -32,6 +36,7 @@ const UserProfile = () => {
             </TabsContent>
             <TabsContent value="work" className="space-y-6">
               <WorkInfoCard />
+              <SalaryCard />
               <SkillsExpertiseCard />
             </TabsContent>
             <TabsContent value="settings" className="space-y-6">

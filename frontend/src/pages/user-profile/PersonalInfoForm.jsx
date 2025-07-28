@@ -11,30 +11,31 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useUserProfile } from "@/hooks/useUserProfile";
-import { toast } from "@/hooks/use-toast";
 
 const PersonalInfoForm = () => {
   const { profile, saveProfile, loading } = useUserProfile();
   const [form, setForm] = useState({
-    first_name: "",
-    last_name: "",
+    firstName: "",
+    lastName: "",
     phone: "",
     address: "",
     city: "",
     state: "",
-    zip_code: "",
+    zipCode: "",
+    salary: "",
   });
 
   useEffect(() => {
     if (profile) {
       setForm({
-        first_name: profile.first_name || "",
-        last_name: profile.last_name || "",
+        firstName: profile.firstName || "",
+        lastName: profile.lastName || "",
         phone: profile.phone || "",
-        address: profile.address || "",
-        city: profile.city || "",
-        state: profile.state || "",
-        zip_code: profile.zip_code || "",
+        address: profile.address?.address || "",
+        city: profile.address?.city || "",
+        state: profile.address?.state || "",
+        zipCode: profile.address?.zipCode || "",
+        salary: profile.salary || "",
       });
     }
   }, [profile]);
@@ -46,22 +47,17 @@ const PersonalInfoForm = () => {
 
   async function handleSubmit(e) {
     e.preventDefault();
-    const res = await saveProfile(form);
-    if (res.error) {
-      const description =
-        typeof res.error === "string"
-          ? res.error
-          : res.error && "message" in res.error && res.error.message
-            ? res.error.message
-            : "Unknown error";
-      toast({
-        title: "Failed to save profile",
-        description,
-        variant: "destructive",
-      });
-    } else {
-      toast({ title: "Profile updated" });
-    }
+    const { city, state, zipCode, address, ...rest } = form;
+    const payload = {
+      ...rest,
+      address: {
+        city,
+        state,
+        zipCode,
+        address,
+      },
+    };
+    await saveProfile(payload);
   }
 
   return (
@@ -74,19 +70,19 @@ const PersonalInfoForm = () => {
         <form className="space-y-6" onSubmit={handleSubmit}>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="space-y-2">
-              <Label htmlFor="first_name">First Name</Label>
+              <Label htmlFor="firstName">First Name</Label>
               <Input
-                id="first_name"
-                value={form.first_name}
+                id="firstName"
+                value={form.firstName}
                 onChange={onChange}
                 required
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="last_name">Last Name</Label>
+              <Label htmlFor="lastName">Last Name</Label>
               <Input
-                id="last_name"
-                value={form.last_name}
+                id="lastName"
+                value={form.lastName}
                 onChange={onChange}
                 required
               />
@@ -96,6 +92,10 @@ const PersonalInfoForm = () => {
             <div className="space-y-2">
               <Label htmlFor="phone">Phone</Label>
               <Input id="phone" value={form.phone} onChange={onChange} />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="salary">Salary</Label>
+              <Input id="salary" value={form.salary} readOnly />
             </div>
           </div>
           <div className="space-y-2">
@@ -112,8 +112,8 @@ const PersonalInfoForm = () => {
               <Input id="state" value={form.state} onChange={onChange} />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="zip_code">Zip Code</Label>
-              <Input id="zip_code" value={form.zip_code} onChange={onChange} />
+              <Label htmlFor="zipCode">Zip Code</Label>
+              <Input id="zipCode" value={form.zipCode} onChange={onChange} />
             </div>
           </div>
           <div className="flex justify-end">
