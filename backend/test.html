@@ -1,0 +1,161 @@
+<!DOCTYPE html >
+    <html lang="en">
+      <head>
+        <meta charset="UTF-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Leave Templates</title>
+            <style>
+              .template-container {
+                max-width: 600px;
+              margin: 20px auto;
+              font-family: Arial, sans-serif;
+              border: 1px solid #ddd;
+              border-radius: 8px;
+              overflow: hidden;
+        }
+
+              .template-header {
+                background: #f8f9fa;
+              padding: 15px;
+              border-bottom: 1px solid #ddd;
+              text-align: center;
+              font-weight: bold;
+              color: #333;
+        }
+
+              .email-content {
+                background: #ffffff;
+              padding: 30px;
+              line-height: 1.6;
+              color: #333;
+        }
+
+              .status-badge {
+                display: inline-block;
+              padding: 6px 12px;
+              border-radius: 20px;
+              font-size: 12px;
+              font-weight: bold;
+              text-transform: uppercase;
+              margin-bottom: 20px;
+        }
+
+              .status-pending {background: #fff3cd; color: #856404; }
+              .status-approved {background: #d4edda; color: #155724; }
+              .status-rejected {background: #f8d7da; color: #721c24; }
+              .status-cancelled {background: #e2e3e5; color: #383d41; }
+
+              .leave-details {
+                background: #f8f9fa;
+              padding: 20px;
+              border-radius: 5px;
+              margin: 20px 0;
+        }
+
+              .detail-row {
+                margin: 8px 0;
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+        }
+
+              .detail-label {
+                font-weight: bold;
+              color: #495057;
+        }
+
+              .detail-value {
+                color: #333;
+        }
+
+              .action-button {
+                display: inline-block;
+              background: #007bff;
+              color: white;
+              padding: 12px 24px;
+              text-decoration: none;
+              border-radius: 5px;
+              margin: 10px 5px;
+              font-weight: bold;
+        }
+
+              .footer {
+                background: #f8f9fa;
+              padding: 20px;
+              text-align: center;
+              font-size: 12px;
+              color: #6c757d;
+              border-top: 1px solid #ddd;
+        }
+
+              .company-logo {
+                max-width: 150px;
+              margin-bottom: 20px;
+        }
+            </style>
+          </head>
+          <body><div class="template-container">
+    <div class="template-header">
+New Leave Request Submission
+    </div>
+    <div class="email-content">
+        <div style="text-align: center;">
+            <!-- <img src="{{company_logo}}" alt="Company Logo" class="company-logo"> -->
+        </div>
+
+        <span class="status-badge status-rejected">New Leave Request Submission</span>
+
+        <p>Dear Asad</p>
+
+        <p>Your leave request has been successfully submitted and is now under review. Here are the details:</p>
+
+
+<div class="leave-details">
+            <div class="detail-row">
+                <span class="detail-label">Request ID:</span>
+                <span class="detail-value">6878efee24a63130ea9172a1</span>
+            </div>
+            <div class="detail-row">
+                <span class="detail-label">Leave Type:</span>
+                <span class="detail-value">casual</span>
+            </div>
+            <div class="detail-row">
+                <span class="detail-label">From Date:</span>
+                <span class="detail-value">2025-07-18T00:00:00.000Z</span>
+            </div>
+            <div class="detail-row">
+                <span class="detail-label">To Date:</span>
+                <span class="detail-value">2025-07-19T00:00:00.000Z</span>
+            </div>
+            <div class="detail-row">
+                <span class="detail-label">Total Days:</span>
+                <span class="detail-value">1</span>
+            </div>
+
+      <div class="detail-row">
+      <span class="detail-label">Reason:</span>
+      <span class="detail-value">undefined</span>
+      </div>
+
+    <div class="detail-row">
+      <span class="detail-label">Status:</span>
+      <span class="detail-value">Pending Approval</span>
+    </div>
+    </div>
+<p>Your request is currently being reviewed by your manager. You will receive another email once a decision has been made.</p>        
+
+        <div style="text-align: center; margin: 30px 0;">
+            <a href="{{dashboard_url}}" class="action-button">View Request Status</a>
+        </div>
+         <p>If you have any questions or need to make changes to your request, please contact your manager or HR department.</p>      
+
+        <p>Best regards,<br>
+        HR Department<br>
+        undefined</p>
+    </div>
+    <div class="footer">
+        This is an automated message. Please do not reply to this email.
+    </div>
+</div>
+</body>
+</html>
