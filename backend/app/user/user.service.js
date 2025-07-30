@@ -84,11 +84,11 @@ const updateUserById = async (userId, updateBody, updatedBy, permission) => {
 
 
 if (updateBody.advanceSalary) {
-    user.advanceSalaries.push(...updateBody.advanceSalary);
+    user.advanceSalaries.push(updateBody.advanceSalary[0]);
     delete updateBody.advanceSalary;
   }
   if (updateBody.deduction) {
-    user.deductions.push(...updateBody.deduction);
+    user.deductions.push(updateBody.deduction[0]);
     delete updateBody.deduction;
   }
 
