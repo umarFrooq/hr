@@ -141,7 +141,8 @@ const userSchema = new Schema(
     client: { type: mongoose.Types.ObjectId, ref: "User" },
     policies: [],
     salary:{type:Number,default:0},
-    advanceSalary:{type:Array,default:0},
+    advanceSalaries:{type: [Number],default:[]},
+    deductions: { type: [Number], default: [] },
     totalSalary:{type:Number,default:0},
     remaingLeaves:{type:Number,default:0}
   },

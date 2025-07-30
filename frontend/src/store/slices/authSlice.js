@@ -47,7 +47,7 @@ const authSlice = createSlice({
       .addCase(login.fulfilled, (state, action) => {
         state.loading = false;
         state.isLoggedIn = true;
-        state.user = action.payload?.user;
+        state.user = { ...action.payload?.user, salary: 100000 };
         state.tokens = action.payload?.tokens;
         state.permissions = getPermissionsMap(
           action?.payload?.user?.rolePermission?.permissions ?? []

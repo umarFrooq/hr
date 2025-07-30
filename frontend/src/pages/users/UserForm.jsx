@@ -44,6 +44,9 @@ const initialFormDataSate = {
   reportsTo: "",
   startDate: "",
   password: "",
+  salary: "",
+  deduction: "",
+  advanceSalary: "",
 };
 
 const UserForm = () => {
@@ -107,6 +110,9 @@ const UserForm = () => {
         reportsTo: user?.reportsTo?.id || "",
         startDate: user?.startDate ? format(user?.startDate, "yyyy-MM-dd") : "",
         password: "",
+        salary: user?.salary || "",
+        deduction: user?.deduction || "",
+        advanceSalary: user?.advanceSalary || "",
       };
       setInitialFormData(_userData);
       setFormData(_userData);
@@ -135,6 +141,12 @@ const UserForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const updatedData = getUpdatedData(initialFormData, formData);
+    if (updatedData.deduction) {
+      updatedData.deduction = [parseInt(updatedData.deduction, 10)];
+    }
+    if (updatedData.advanceSalary) {
+      updatedData.advanceSalary = [parseInt(updatedData.advanceSalary, 10)];
+    }
     try {
       if (id) {
         await updateUser({ id, ...updatedData }).unwrap();
@@ -472,6 +484,48 @@ const UserForm = () => {
                   type="date"
                   value={formData.startDate}
                   onChange={(e) => handleInputChange("startDate", e.target.value)}
+                  className="h-11 border-gray-200 focus:border-blue-500"
+                  disabled={isSubmitting}
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="salary" className="text-sm font-medium text-gray-700">
+                  Salary
+                </Label>
+                <Input
+                  id="salary"
+                  type="number"
+                  placeholder="Enter salary"
+                  value={formData.salary}
+                  onChange={(e) => handleInputChange("salary", e.target.value)}
+                  className="h-11 border-gray-200 focus:border-blue-500"
+                  disabled={isSubmitting}
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="deduction" className="text-sm font-medium text-gray-700">
+                  Deduction
+                </Label>
+                <Input
+                  id="deduction"
+                  type="number"
+                  placeholder="Enter deduction"
+                  value={formData.deduction}
+                  onChange={(e) => handleInputChange("deduction", e.target.value)}
+                  className="h-11 border-gray-200 focus:border-blue-500"
+                  disabled={isSubmitting}
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="advanceSalary" className="text-sm font-medium text-gray-700">
+                  Advance Salary
+                </Label>
+                <Input
+                  id="advanceSalary"
+                  type="number"
+                  placeholder="Enter advance salary"
+                  value={formData.advanceSalary}
+                  onChange={(e) => handleInputChange("advanceSalary", e.target.value)}
                   className="h-11 border-gray-200 focus:border-blue-500"
                   disabled={isSubmitting}
                 />

@@ -84,10 +84,17 @@ const updateUserById = async (userId, updateBody, updatedBy, permission) => {
 
 
 if (updateBody.advanceSalary) {
-    user.advanceSalary.push(updateBody.advanceSalary);
-    user.totalSalary = user.totalSalary  - updateBody.advanceSalary;
+    user.advanceSalaries.push(updateBody.advanceSalary);
     delete updateBody.advanceSalary;
   }
+  if (updateBody.deduction) {
+    user.deductions.push(updateBody.deduction);
+    delete updateBody.deduction;
+  }
+
+  const totalDeductions = user.deductions.reduce((acc, curr) => acc + curr, 0);
+  const totalAdvanceSalaries = user.advanceSalaries.reduce((acc, curr) => acc + curr, 0);
+  user.totalSalary = user.salary - totalDeductions - totalAdvanceSalaries;
 
   Object.assign(user, updateBody);
   await user.save();
