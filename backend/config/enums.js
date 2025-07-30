@@ -33,7 +33,8 @@ const resourceTypes = {
   ROLES: "roles",
   PERMISSIONS: "permissions",
   CHECK_IN: "checkin",
-  LEAVES: "leaves"
+  LEAVES: "leaves",
+  PROFILE: "profile"
 }
 const actionTypes = {
   CREATE: 'create',
