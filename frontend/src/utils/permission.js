@@ -14,6 +14,9 @@ export const getPermissionsMap = (permissions = []) => {
 // }
 
 export const hasPermission = (_permissions, resource, action, _scope = ["any"]) => {
+  if (resource === "profile" && action === "read" && _scope.includes("own")) {
+    return true;
+  }
   // Ensure _scope is always an array
   const scopesToCheck = Array.isArray(_scope) ? _scope : [_scope];
 
