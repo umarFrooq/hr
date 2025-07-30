@@ -132,10 +132,7 @@ const changePassword = async (user, body) => {
  * @returns {Promise<User>}
  */
 async function getUserByEmailAndRole(email, role) {
-  return User.findOne({ email, $or: role });
-    // return User.find({});
-
-
+  return User.findOne({ email, $or: role }).populate('rolePermission');
 }
 
 const findOneUser = async (query) => {
